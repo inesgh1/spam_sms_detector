@@ -59,3 +59,20 @@ warnings.filterwarnings("ignore")
 # seeding
 np.random.seed(123)
 ```
+### load data
+```
+data = pd.read_csv("../data/spam.tsv", sep="\t")
+```
+### Handling Missing Values
+Sometimes data can have missing values. We can use the isnull() method from pandas to check if our dataset has any missing values.
+```
+# check missing values
+data.isnull().sum()
+```
+===> The output shows that our dataset does not have any missing values.(Thank God 😍)
+
+
+
+
+
+
