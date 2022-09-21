@@ -273,7 +273,20 @@ joblib.dump(spam_classifier, '../models/spam-detection-model.pkl')
 joblib.dump(vectorizer,'../preprocessing/count_vectorizer.pkl')
 ```
  Congrats 🎉 :tada:  you've build your model now it's deployment time.    
-    
+  
+# What is Algorithmia?
+Algorithmia is a MLOps tool that provides a simple and faster way to deploy your machine learning model into production.
+
+Algorithmia specializes in "algorithms as a service". It allows users to create code snippets that run the ML model and host them on Algorithmia. Then you can call your code as an API.
+
+Now your model can be used for different applications of your choice, such as web apps, mobile apps, or e-commerce with a simple API call from Algorithmia.
+Machine learning models created using several computer languages, including R, Python, Java, and Scala, are supported by algorithms. Additionally, it supports well-known deep learning and machine learning frameworks including Keras, Pytorch, Tensorflow, Scikit-Learn, and XGBoost.
+
+In order to minimize costs and increase performance to meet your demands, Algorithmia's serverless Artificial Intelligence layer utilizes both CPUs and GPUs.
+
+Currently, this platform features 4,500 algorithms and over 60,000 developers.
+
+You must take the following six actions in order to deploy your machine learning model on Algorithmia.
     
     
     
