@@ -206,10 +206,73 @@ X_train, X_test, y_train, y_test = train_test_split(
     stratify=data["label"],
 )
 ```
+The CountVectorizer method from scikit-learn will help us transform our cleaned dataset into numerical values. The method converts a collection of text documents to a matrix of token counts.
+```
+# Transform text data 
+vectorizer = CountVectorizer(lowercase=False)
+vectorizer.fit(X_train)
 
+#transform train data 
+X_train_trans = vectorizer.transform(X_train)
 
+#transform test data
+X_text_trans = vectorizer.transform(X_test)
+```
+### Create Our Model
+We will train the Multinomial Naive Bayes algorithm to classify if a message is legitimate or spam. This is one of the most common algorithms used for text classification.Then we train our classifier by using cross validation to avoid overfitting.
+```
+# Create a classifier
 
-    
+spam_classifier = MultinomialNB()
+
+# Train the model with cross validation
+scores = cross_val_score(spam_classifier,X_train_trans,y_train,cv=10,verbose=3,n_jobs=-1)
+
+# find the mean of the all scores
+scores.mean()
+```
+The mean of the scores is around 97.68%. Our model performs well, but we can improve its performance by optimizing its hyperparameter values with the Randomized Search method from scikit-learn.
+```
+# fine turning model parameters
+
+distribution = {"alpha": [1, 0.1, 0.01, 0.001, 0.0001, 0, 0.2, 0.3]}
+
+grid = RandomizedSearchCV(
+    spam_classifier,
+    param_distributions=distribution,
+    n_jobs=-1,
+    cv=10,
+    n_iter=20,
+    random_state=42,
+    return_train_score=True,
+    verbose=2,
+)
+```
+We will optimize the alpha hyparameter from our model to get the best value that will increase our model's performance.
+```
+# training with randomized search
+grid.fit(X_train_trans, y_train)
+
+# summarize the results of the random parameter search
+print(grid.best_score_)
+print(grid.best_estimator_)
+print(grid.best_params_)
+```
+==> The best score is the same as the previous one. Now let's test our model with the test data.
+
+The accuracy of our model is around 97.6%, which is good performance.That's mean that our model has a good performance and now we can deploy it to production.
+
+The model will be saved in models directory.Our  Count Vectorizer will also be saved in the preprocessing directory.
+```
+#save model 
+import joblib 
+
+joblib.dump(spam_classifier, '../models/spam-detection-model.pkl')
+
+#save Vectorizer
+joblib.dump(vectorizer,'../preprocessing/count_vectorizer.pkl')
+```
+ Congrats 🎉 :tada:  you've build your model now it's deployment time.    
     
     
     
