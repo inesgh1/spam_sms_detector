@@ -136,6 +136,86 @@ plt.show()
 After exploring and analyzing the dataset, the next step is to preprocess the dataset into the right format before creating our machine learning model.
 
 We first replace the ham and spam classes with numerical values. The ham class will be labeled as 0 and spam class will be labeled as 1.
+```
+# replace ham to 0 and spam to 1
+new_data = data.replace({"ham": 0, "spam": 1})
+new_data.head()
+```
+
+The messages in this dataset contain a lot of unnecessary words and characters that we don't need when creating machine learning models.
+
+We will clean the messages by removing stopwords, numbers, and punctuation. Then we will change words into lower case, and finally convert each word into its base form by using the lemmatization process in the NLTK package.
+
+The **text_cleaning()** function will handle all necessary steps to clean our dataset.
+```
+stop_words =  stopwords.words('english')
+
+def text_cleaning(text, remove_stop_words=True, lemmatize_words=True):
+    # Clean the text, with the option to remove stop_words and to lemmatize word
+
+    # Clean the text
+    text = re.sub(r"[^A-Za-z0-9]", " ", text)
+    text = re.sub(r"\'s", " ", text)
+    text = re.sub(r"n't", " not ", text)
+    text = re.sub(r"I'm", "I am", text)
+    text = re.sub(r"ur", " your ", text)
+    text = re.sub(r" nd "," and ",text)
+    text = re.sub(r"\'d", " would ", text)
+    text = re.sub(r"\'ll", " will ", text)
+    text = re.sub(r" tkts "," tickets ",text)
+    text = re.sub(r" c "," can ",text)
+    text = re.sub(r" e g ", " eg ", text)
+    text =  re.sub(r'http\S+',' link ', text)
+    text = re.sub(r'\b\d+(?:\.\d+)?\s+', '', text) # remove numbers
+    text = re.sub(r" u "," you ",text)
+    text = text.lower()  # set in lowercase 
+        
+    # Remove punctuation from text
+    text = ''.join([c for c in text if c not in punctuation])
+    
+    # Optionally, remove stop words
+    if remove_stop_words:
+        text = text.split()
+        text = [w for w in text if not w in stop_words]
+        text = " ".join(text)
+    
+    # Optionally, shorten words to their stems
+    if lemmatize_words:
+        text = text.split()
+        lemmatizer = WordNetLemmatizer() 
+        lemmatized_words = [lemmatizer.lemmatize(word) for word in text]
+        text = " ".join(lemmatized_words)
+    
+    # Return a list of words
+    return(text)
+```
+Now we can clean our dataset by using the text_cleaning() function.    
+```    
+    #clean the dataset 
+new_data["clean_message"] = new_data["message"].apply(text_cleaning)
+```   
+Now we split our dataset into train and test data. The test size is 15% of the entire dataset.
+```
+# split data into train and test
+X_train, X_test, y_train, y_test = train_test_split(
+    new_data["clean_message"],
+    new_data["label"],
+    test_size=0.15,
+    random_state=0,
+    shuffle=True,
+    stratify=data["label"],
+)
+```
+
+
+
+    
+    
+    
+    
+    
+    
+    
 
 
 
