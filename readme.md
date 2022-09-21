@@ -128,8 +128,14 @@ plt.tight_layout(pad=0)
 
 plt.show()
 ```
-==> We got this 'beautiful' wordCloud of the world used in legitime messages😜
+==> We got this 'beautiful' wordCloud of the world used in legit messages😜
 ![wordcloud](https://github.com/inesgh1/spam_sms_detector/blob/main/word%20map.png)
+
+==> As you can see :eyes: in the legit messages, the most frequent words are will, gt, now, ok, call, want, got, and so on.Next we'll do the same for the spam messages.
+### Processing the Data
+After exploring and analyzing the dataset, the next step is to preprocess the dataset into the right format before creating our machine learning model.
+
+We first replace the ham and spam classes with numerical values. The ham class will be labeled as 0 and spam class will be labeled as 1.
 
 
 
