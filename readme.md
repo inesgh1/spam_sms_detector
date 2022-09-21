@@ -70,6 +70,67 @@ Sometimes data can have missing values. We can use the isnull() method from pand
 data.isnull().sum()
 ```
 ===> The output shows that our dataset does not have any missing values.(Thank God 😍)
+### Evaluating Class Distribution
+We can use the **value_counts()** method from the pandas package to evaluate the class distribution form our dataset.
+```
+# evalute class distribution
+data["label"].value_counts()
+```
+### EDA
+EDA is your way to know your data and to understand the strength of your data and what will help you to succeed your data science project.
+In this step we are going to find frequent words that are used in both legitimate and spam messages.
+```
+# collect words from the dataset
+def collect_words(data, label):
+    collected_words = " "
+
+    # iterate through the csv file
+    for val in data.message[data["label"] == label]:
+
+        # typecaste each val to string
+        val = str(val)
+
+        # split the value
+        tokens = val.split()
+
+        # Converts each token into lowercase
+        for i in range(len(tokens)):
+            tokens[i] = tokens[i].lower()
+
+        for words in tokens:
+            collected_words = collected_words + words + " "
+
+    return collected_words
+```
+This function called collect_words() will collect all words from the dataset according to their labels (ham or spam).
+
+Then we can visualize frequent words by using the wordcloud Python package. We will start with messages labeled as ham (legitimate).
+```
+# visualize ham labeled sms
+cloud_stopwords = set(STOPWORDS)
+ham_words = collect_words(data, label="ham")
+
+print("Total words {}".format(len(ham_words)))
+
+wordcloud = WordCloud(
+    width=1000,
+    height=1000,
+    background_color="white",
+    stopwords=cloud_stopwords,
+    min_font_size=10,
+).generate(ham_words)
+
+# plot the WordCloud image
+plt.figure(figsize=(15, 8), facecolor=None)
+plt.imshow(wordcloud)
+plt.axis("off")
+plt.tight_layout(pad=0)
+
+plt.show()
+```
+==> We got this 'beautiful' wordCloud of the world used in legitime messages😜
+![wordcloud](https://github.com/inesgh1/spam_sms_detector/blob/main/word%20map.png)
+
 
 
 
