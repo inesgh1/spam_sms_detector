@@ -1,3 +1,11 @@
+---
+layout: post
+title: Build a Ham and spam detector 
+date: 2022-09-19 
+description: this is an end to end project to build a spam and ham detector
+img: sms.png # Add image post (optional)
+tags: [Programming, Learn,flask,transformers] # add tag
+---
 This project is about building NLP model that detects spam SMS text messages and because it's not fun at all to just build a model and forget about it as 90% of ML models in the world ,I'll be the exception :wink: and I'll deploy my model into an MLOps platform 
 ## Plan 
 - create an NLP model that detects spam SMS text messages
